@@ -36,7 +36,18 @@
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
-			"extensions": ["ms-vsliveshare.vsliveshare"]
+			"extensions": [
+				"ms-vsliveshare.vsliveshare",
+				"esbenp.prettier-vscode"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"editor.defaultFormatter": "esbenp.prettier-vscode",
+				"editor.codeActionsOnSave": [
+					"source.addMissingImports",
+					"source.fixAll.eslint"
+				]
+			}
 		}
 	}
 
