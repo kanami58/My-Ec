@@ -25,6 +25,12 @@ app.get('/items', async (_req, res) => {
   res.send(allItems)
 })
 
+app.post('/items', async (req, res) => {
+  console.log(req.body)
+  await prisma.item.create({data: {id: req.body.id, name: req.body.name, price: req.body.price, imageUrl: req.body.imageUrl}})
+  res.send("created")
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
