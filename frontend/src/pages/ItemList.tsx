@@ -1,9 +1,11 @@
 import { Box, Grid } from "@mui/material";
+import { useRecoilValue } from "recoil";
 
 import ItemCard from "../components/ItemCard";
+import { allItemsSelector } from "../store";
 
-const dummyItemIds = [...Array(20).keys()];
 function ItemList() {
+  const allItems = useRecoilValue(allItemsSelector);
   return (
     <>
       <Box sx={{ width: "100%" }}>
@@ -13,8 +15,8 @@ function ItemList() {
           rowSpacing={3}
           columnSpacing={{ xs: 1, sm: 2, md: 2 }}
         >
-          {dummyItemIds.map((itemId) => {
-            return <ItemCard itemId={itemId} />;
+          {allItems.map((item) => {
+            return <ItemCard item={item} />;
           })}
         </Grid>
       </Box>
