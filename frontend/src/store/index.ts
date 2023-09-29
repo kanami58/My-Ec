@@ -9,10 +9,7 @@ export const allItemsSelector = selector<Item[]>({
   get: async () => {
     // ここでAPIにリクエストを行ってDBの値を取得する
 		const result = await fetch('http://localhost:3000/items', { mode: "cors"})
-			console.log(result)
-			const body = await result.json()
-			console.log(body)
-
+		const body = await result.json()
     return body;
   },
 });
