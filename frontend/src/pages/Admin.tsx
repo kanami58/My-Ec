@@ -1,8 +1,10 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
+import ItemActionContainer from "../components/ItemActionContainer";
 import { allItemsSelector } from "../store";
-import { useNavigate } from "react-router-dom";
 
 function ImageCellRenderer({ value }: { value: string }) {
   return (
@@ -25,9 +27,11 @@ const columns: GridColDef[] = [
 function Admin() {
   const navigate = useNavigate();
   const allItems = useRecoilValue(allItemsSelector);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
   return (
     <>
-      <button onClick={()=> navigate('/admin/item/register')}>商品追加</button>
+      <button onClick={() => navigate("/admin/item/register")}>商品追加</button>
       <DataGrid
         rows={allItems}
         columns={columns}
@@ -38,7 +42,13 @@ function Admin() {
         }}
         pageSizeOptions={[5, 10]}
         checkboxSelection
+        onRowSelectionModelChange={(e) => {
+          setSelectedIds(e as number[]);
+        }}
       />
+      {selectedIds.length > 0 && (
+        <ItemActionContainer selectedIds={selectedIds} />
+      )}
     </>
   );
 }
