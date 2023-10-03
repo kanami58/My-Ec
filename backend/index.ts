@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
+import { request } from "http";
 
 const app: express.Express = express();
 const port = 3000;
@@ -39,6 +40,17 @@ app.post("/items", async (req, res) => {
     },
   });
   res.send("created");
+});
+
+app.post("/items/delete", async (req, res) => {
+  await prisma.item.deleteMany({
+    where: {
+      id: {
+        in: req.body.ids
+      }
+    },
+  });
+  res.send("deleted");
 });
 
 app.listen(port, () => {

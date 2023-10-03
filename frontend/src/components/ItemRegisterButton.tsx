@@ -1,6 +1,9 @@
 import { Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilCallback } from "recoil";
+
+import { allItemsSelector } from "../store";
 
 type Props = {
   name: string;
@@ -9,7 +12,12 @@ type Props = {
 };
 
 function ItemRegisterButton(props: Props) {
-	const navigate = useNavigate();
+
+  const refreshItems = useRecoilCallback(({ refresh }) => () => {
+    refresh(allItemsSelector);
+  });
+
+  const navigate = useNavigate();
   const onClickHandler = async () => {
     try {
       await fetch("http://localhost:3000/items", {
@@ -18,7 +26,8 @@ function ItemRegisterButton(props: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(props),
       });
-			navigate('/admin')
+      navigate("/admin");
+      refreshItems();
     } catch {
       setOpen(true);
     }
@@ -26,7 +35,7 @@ function ItemRegisterButton(props: Props) {
 
   const [open, setOpen] = useState<boolean>(false);
 
-	const handleClose = () => {
+  const handleClose = () => {
     setOpen(false);
   };
 
