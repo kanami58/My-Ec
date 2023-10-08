@@ -16,7 +16,7 @@ function ItemList() {
           columnSpacing={{ xs: 1, sm: 2, md: 2 }}
         >
           {allItems.map((item) => {
-            return <ItemCard item={item} />;
+            return <ItemCard key={item.id} item={item} />;
           })}
         </Grid>
       </Box>
