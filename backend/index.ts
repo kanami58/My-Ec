@@ -46,9 +46,46 @@ app.post("/items/delete", async (req, res) => {
   await prisma.item.deleteMany({
     where: {
       id: {
-        in: req.body.ids
-      }
+        in: req.body.ids,
+      },
     },
+  });
+  res.send("deleted");
+});
+
+app.get("/cart", async (_req, res) => {
+  const allItems = await prisma.cart.findMany();
+  res.send(allItems);
+});
+
+app.post("/cart/add", async (req, res) => {
+  await prisma.cart.create({
+    data: {
+      itemId: req.body.itemId,
+      userId: req.body.userId,
+      count: req.body.count,
+    },
+  });
+  res.send("created");
+});
+
+app.post("/cart/count", async (req, res) => {
+  await prisma.cart.update({
+    where: {
+      id:  req.body.cartId,
+    },
+    data: {
+      count: req.body.count
+    }
+  });
+  res.send("updated");
+});
+
+app.post("/cart/delete", async (req, res) => {
+  await prisma.cart.delete({
+    where: {
+      id:  req.body.cartId,
+    }
   });
   res.send("deleted");
 });

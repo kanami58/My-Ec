@@ -16,3 +16,12 @@ model Item {
   price Int
   imageUrl String
 }
+
+model Cart {
+  id  Int  @id @default(autoincrement())
+  itemId  Int
+  userId Int
+  count Int
+
+  @@unique([itemId,userId],name:"cartItemId")
+}
