@@ -3,14 +3,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
+import ImageCellRenderer from "../components/ImageCellRenderer";
 import ItemActionContainer from "../components/ItemActionContainer";
 import { allItemsSelector } from "../store";
-
-function ImageCellRenderer({ value }: { value: string }) {
-  return (
-    <img src={value} alt="Image" style={{ width: "50px", height: "50px" }} />
-  );
-}
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 70 },
