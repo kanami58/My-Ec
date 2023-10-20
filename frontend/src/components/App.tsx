@@ -3,9 +3,11 @@ import { Route, Routes } from "react-router-dom";
 
 import Admin from "../pages/Admin";
 import Cart from "../pages/Cart";
+import Checkout from "../pages/Checkout";
 import ItemDetail from "../pages/ItemDetail";
 import ItemList from "../pages/ItemList";
 import RegisterItem from "../pages/RegisterItem";
+import Thanks from "../pages/Thanks";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/itemlist" element={<ItemList />} />
           <Route path="/item" element={<ItemDetail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/thanks" element={<Thanks />} />
         </Routes>
       </React.Suspense>
     </>

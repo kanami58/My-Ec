@@ -1,9 +1,9 @@
 import { Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilCallback, useRecoilValue } from "recoil";
 
-import { allItemsSelector } from "../store";
+import { allItemsSelector, cartItemsSelector } from "../store";
 
 function ItemDetail() {
   const navigate = useNavigate();
@@ -20,11 +20,15 @@ function ItemDetail() {
     setOpen(false);
   };
 
+  const refreshItems = useRecoilCallback(({ refresh }) => () => {
+    refresh(cartItemsSelector);
+  });
+
   if (item == null) {
     return <>存在しない商品です</>;
   }
 
-	const onClickHandler = async () => {
+  const onClickHandler = async () => {
     try {
       await fetch("http://localhost:3000/cart/add", {
         mode: "cors",
@@ -33,6 +37,7 @@ function ItemDetail() {
         body: JSON.stringify({ itemId: item.id, userId: 1, count: 1 }),
       });
       navigate("/cart");
+      refreshItems();
     } catch {
       setOpen(true);
     }

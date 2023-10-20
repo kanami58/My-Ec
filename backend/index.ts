@@ -90,6 +90,25 @@ app.post("/cart/delete", async (req, res) => {
   res.send("deleted");
 });
 
+app.post("/checkout", async (req, res) => {
+  await prisma.$transaction(async (prisma)=> {
+    await prisma.cart.deleteMany({
+      where: {
+        id: {
+          in: req.body.cartIds,
+        },
+      },
+    });
+  
+    const date = new Date()
+    await prisma.checkout.createMany({
+      data: req.body.checkouts.map((co: any) => ({ ...co, checkoutAt: date })),
+    });
+  }) 
+
+  res.send("checkouted");
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
