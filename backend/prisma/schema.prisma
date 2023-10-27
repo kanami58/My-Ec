@@ -20,7 +20,7 @@ model Item {
 model Cart {
   id  Int  @id @default(autoincrement())
   itemId  Int
-  userId Int
+  userId String
   count Int
 
   @@unique([itemId,userId],name:"cartItemId")
@@ -29,7 +29,7 @@ model Cart {
 model Checkout {
   id  Int  @id @default(autoincrement())
   itemId  Int
-  userId Int
+  userId String
   count Int
   totalPrice Int
   checkoutAt DateTime

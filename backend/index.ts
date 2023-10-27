@@ -53,8 +53,12 @@ app.post("/items/delete", async (req, res) => {
   res.send("deleted");
 });
 
-app.get("/cart", async (_req, res) => {
-  const allItems = await prisma.cart.findMany();
+app.get("/cart", async (req, res) => {
+  const allItems = await prisma.cart.findMany({
+    where: {
+      userId: req.query.userid as string,
+    },
+  });
   res.send(allItems);
 });
 
@@ -72,11 +76,11 @@ app.post("/cart/add", async (req, res) => {
 app.post("/cart/count", async (req, res) => {
   await prisma.cart.update({
     where: {
-      id:  req.body.cartId,
+      id: req.body.cartId,
     },
     data: {
-      count: req.body.count
-    }
+      count: req.body.count,
+    },
   });
   res.send("updated");
 });
@@ -84,14 +88,14 @@ app.post("/cart/count", async (req, res) => {
 app.post("/cart/delete", async (req, res) => {
   await prisma.cart.delete({
     where: {
-      id:  req.body.cartId,
-    }
+      id: req.body.cartId,
+    },
   });
   res.send("deleted");
 });
 
 app.post("/checkout", async (req, res) => {
-  await prisma.$transaction(async (prisma)=> {
+  await prisma.$transaction(async (prisma) => {
     await prisma.cart.deleteMany({
       where: {
         id: {
@@ -99,12 +103,12 @@ app.post("/checkout", async (req, res) => {
         },
       },
     });
-  
-    const date = new Date()
+
+    const date = new Date();
     await prisma.checkout.createMany({
       data: req.body.checkouts.map((co: any) => ({ ...co, checkoutAt: date })),
     });
-  }) 
+  });
 
   res.send("checkouted");
 });

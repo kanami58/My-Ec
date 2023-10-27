@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Cart" ALTER COLUMN "userId" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Checkout" ALTER COLUMN "userId" SET DATA TYPE TEXT;

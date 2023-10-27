@@ -48,7 +48,7 @@ function Cart() {
         rowSelection={false}
       />
       <SubTotal cartItems={cartItems} />
-      <Button onClick={()=>navigate('/itemlist') }>商品一覧へ戻る</Button>
+      <Button onClick={()=>navigate('/') }>商品一覧へ戻る</Button>
       <Button onClick={()=>navigate('/checkout') }>支払いへ進む</Button>
     </>
   );
