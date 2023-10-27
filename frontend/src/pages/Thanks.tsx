@@ -7,7 +7,7 @@ function Thanks() {
   return (
     <>
       商品の購入が完了しました。
-      <Button onClick={() => navigate("/itemlist")}>商品一覧へ戻る</Button>
+      <Button onClick={() => navigate("/")}>商品一覧へ戻る</Button>
     </>
   );
 }

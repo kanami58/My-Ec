@@ -1,4 +1,5 @@
 import { Button, Snackbar } from "@mui/material";
+import { Auth } from "aws-amplify";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilCallback, useRecoilValue } from "recoil";
@@ -29,12 +30,14 @@ function ItemDetail() {
   }
 
   const onClickHandler = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    console.log(user.username);
     try {
       await fetch("http://localhost:3000/cart/add", {
         mode: "cors",
         method: "post",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ itemId: item.id, userId: 1, count: 1 }),
+        body: JSON.stringify({ itemId: item.id, userId: user.username, count: 1 }),
       });
       navigate("/cart");
       refreshItems();
@@ -51,7 +54,7 @@ function ItemDetail() {
       <li>価格： {item.price}</li>
       <img src={item.imageUrl} alt={item.name} />
       <div>
-        <Button onClick={() => navigate("/itemlist")}>商品一覧に戻る</Button>
+        <Button onClick={() => navigate("/")}>商品一覧に戻る</Button>
         <Button onClick={() => onClickHandler()}>カートへ入れる</Button>
       </div>
       <Snackbar

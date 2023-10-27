@@ -8,12 +8,8 @@ function PrefSelectBox(props: { name: string; required: boolean }) {
       name={props.name}
       control={control}
       render={({ field }) => (
-        <select {...field}>
-          {" "}
-          required={props.required}
-          <option value="" selected>
-            都道府県
-          </option>
+        <select {...{ ...field, defaultValue: 0, required: props.required }}>
+          <option value="0">都道府県</option>
           <option value="1">北海道</option>
           <option value="2">青森県</option>
           <option value="3">岩手県</option>

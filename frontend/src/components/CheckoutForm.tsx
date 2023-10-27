@@ -1,4 +1,5 @@
 import { Box, Snackbar } from "@mui/material";
+import { Auth } from "aws-amplify";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -63,6 +64,8 @@ function CheckoutForm() {
   const navigate = useNavigate();
 
   const onSubmit = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+
     try {
       await fetch("http://localhost:3000/checkout", {
         mode: "cors",
@@ -73,7 +76,7 @@ function CheckoutForm() {
           checkouts: cartItems.map((cartItem) => {
             return {
               itemId: cartItem.itemId,
-              userId: 1,
+              userId: user.username,
               count: cartItem.count,
               totalPrice: cartItem.price * cartItem.count,
             };
